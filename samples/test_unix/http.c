@@ -6,9 +6,10 @@ int get_next_line(const char* data, char* dst, int dst_size);
 
 int http_get_requested_file(const char* http, char* dst, int dst_size){
 	char lineBuffer[1024];
-	memset(dst, 0, dst_size);
 	int i = 0;
 	int n = 0; 
+    int j;
+	memset(dst, 0, dst_size);
 	while(n != 2){
 		n = get_next_line(http + i, lineBuffer, sizeof(lineBuffer));
 		i += n;
@@ -20,7 +21,7 @@ int http_get_requested_file(const char* http, char* dst, int dst_size){
 			char* req = lineBuffer + 4;
 			int max = sizeof(lineBuffer) - 4;
 			max = max < dst_size - 1 ? max : dst_size - 1;
-			for(int j = 0; j < max; j++){
+			for(j = 0; j < max; j++){
 				if(req[j] == ' ')
 					return j;
 				dst[j] = req[j];
@@ -44,10 +45,10 @@ int http_get_response_header(int code, int len, char* dst, int dst_size){
 }
 
 int get_next_line(const char* data, char* dst, int dst_size){
-	//printf("%s\n", data);
-	memset(dst, 0, dst_size);
+	int i;
+    memset(dst, 0, dst_size);
 	char lastChar = 0;
-	for(int i = 0; i < dst_size - 1; i++){
+	for(i = 0; i < dst_size - 1; i++){
 		if(lastChar == '\r' && data[i] == '\n'){
 			return i + 1;
 		}

@@ -1,6 +1,6 @@
 CC=gcc
 AR=ar
-CFLAGS=-I.
+CFLAGS=-I. -std=gnu99
 OBJDIR=obj
 LIBDIR=lib
 OBJS=$(OBJDIR)/http.o $(OBJDIR)/test.o
